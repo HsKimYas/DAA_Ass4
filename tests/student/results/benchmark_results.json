@@ -1,0 +1,492 @@
+{
+  "seed": 20261108,
+  "samples": 5,
+  "iterations_per_sample": 200,
+  "warmup_calls_per_method_and_pair": 200,
+  "global_warmup_calls_per_method": 1000,
+  "unit": "microseconds_per_call",
+  "java_version": "17.0.21",
+  "java_vm": "OpenJDK 64-Bit Server VM",
+  "java_vm_version": "17.0.21+9",
+  "os": "Linux 6.18.57",
+  "architecture": "amd64",
+  "available_processors": 9,
+  "max_heap_bytes": 402653184,
+  "timing_scope": "Search helper including prefix/hash preparation and result-list allocation; loop plus size/first/last consumption; excludes input generation, correctness checks, warm-up, parsing, serialization, process startup and compilation.",
+  "order": "One JVM. Rotate method order across five samples; default JVM JIT and GC enabled.",
+  "rows": [
+    {
+      "case": "random",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "naive",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        7.8268949999999995,
+        8.6136,
+        8.25167,
+        11.111185,
+        9.5609
+      ],
+      "median_us": 8.6136
+    },
+    {
+      "case": "random",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "kmp",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        8.16805,
+        9.36221,
+        11.195160000000001,
+        10.53053,
+        10.45402
+      ],
+      "median_us": 10.45402
+    },
+    {
+      "case": "random",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "rk",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        11.347335000000001,
+        10.57134,
+        11.033624999999999,
+        12.566230000000001,
+        9.31193
+      ],
+      "median_us": 11.033624999999999
+    },
+    {
+      "case": "random",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "naive",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        5.20848,
+        4.11472,
+        4.056235,
+        4.2201699999999995,
+        4.301645
+      ],
+      "median_us": 4.2201699999999995
+    },
+    {
+      "case": "random",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "kmp",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        6.209505,
+        5.90611,
+        3.2911,
+        3.224205,
+        3.147495
+      ],
+      "median_us": 3.2911
+    },
+    {
+      "case": "random",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "rk",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        57.45959,
+        27.309524999999997,
+        11.683330000000002,
+        11.574770000000001,
+        12.24481
+      ],
+      "median_us": 12.24481
+    },
+    {
+      "case": "random",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "naive",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        8.705639999999999,
+        8.91184,
+        8.82101,
+        8.809395,
+        8.696620000000001
+      ],
+      "median_us": 8.809395
+    },
+    {
+      "case": "random",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "kmp",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        7.975165,
+        8.41471,
+        7.502365,
+        9.454595000000001,
+        6.6794
+      ],
+      "median_us": 7.975165
+    },
+    {
+      "case": "random",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "rk",
+      "occurrences": 1,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        24.44775,
+        25.272875,
+        23.84817,
+        24.84739,
+        25.235065
+      ],
+      "median_us": 24.84739
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "naive",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        14.258975,
+        14.251165,
+        14.582754999999999,
+        14.605340000000002,
+        13.255550000000001
+      ],
+      "median_us": 14.258975
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "kmp",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        2.165645,
+        2.55021,
+        2.10305,
+        2.136155,
+        2.18362
+      ],
+      "median_us": 2.165645
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "rk",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        4.276955,
+        4.052825,
+        3.79314,
+        3.7975499999999998,
+        3.769255
+      ],
+      "median_us": 3.7975499999999998
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "naive",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        139.87358,
+        129.60218,
+        136.71392,
+        139.18366,
+        141.5175
+      ],
+      "median_us": 139.18366
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "kmp",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        8.237195,
+        6.86858,
+        7.388645,
+        8.321575000000001,
+        8.378105
+      ],
+      "median_us": 8.237195
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "rk",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        14.43844,
+        14.28527,
+        11.3911,
+        13.063915,
+        11.843215
+      ],
+      "median_us": 13.063915
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "naive",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        502.07874000000004,
+        520.66743,
+        589.78218,
+        500.94682,
+        662.881005
+      ],
+      "median_us": 520.66743
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "kmp",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        20.2103,
+        14.888309999999999,
+        13.403265,
+        12.551465,
+        13.512325
+      ],
+      "median_us": 13.512325
+    },
+    {
+      "case": "repetitive_mismatch",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "rk",
+      "occurrences": 0,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        25.40792,
+        23.607415,
+        23.676415000000002,
+        25.154195,
+        23.921930000000003
+      ],
+      "median_us": 23.921930000000003
+    },
+    {
+      "case": "dense_matches",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "naive",
+      "occurrences": 451,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        77.65612,
+        13.363655000000001,
+        11.37773,
+        12.73173,
+        14.820855
+      ],
+      "median_us": 13.363655000000001
+    },
+    {
+      "case": "dense_matches",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "kmp",
+      "occurrences": 451,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        8.132045,
+        12.007155000000001,
+        3.7276,
+        3.7279500000000003,
+        4.274705
+      ],
+      "median_us": 4.274705
+    },
+    {
+      "case": "dense_matches",
+      "n": 500,
+      "m": 50,
+      "seed": 20261608,
+      "method": "rk",
+      "occurrences": 451,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        19.57477,
+        14.80333,
+        16.89637,
+        14.36048,
+        12.656915
+      ],
+      "median_us": 14.80333
+    },
+    {
+      "case": "dense_matches",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "naive",
+      "occurrences": 1351,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        69.96248,
+        68.466525,
+        67.358135,
+        74.706175,
+        65.31172
+      ],
+      "median_us": 68.466525
+    },
+    {
+      "case": "dense_matches",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "kmp",
+      "occurrences": 1351,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        18.608140000000002,
+        8.480255,
+        12.522219999999999,
+        17.28469,
+        18.66593
+      ],
+      "median_us": 17.28469
+    },
+    {
+      "case": "dense_matches",
+      "n": 1500,
+      "m": 150,
+      "seed": 20262608,
+      "method": "rk",
+      "occurrences": 1351,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        83.450715,
+        83.935435,
+        81.13845500000001,
+        87.717665,
+        84.647435
+      ],
+      "median_us": 83.935435
+    },
+    {
+      "case": "dense_matches",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "naive",
+      "occurrences": 2701,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        248.86887,
+        244.187665,
+        236.67323,
+        233.4129,
+        236.72465499999998
+      ],
+      "median_us": 236.72465499999998
+    },
+    {
+      "case": "dense_matches",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "kmp",
+      "occurrences": 2701,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        20.333235,
+        16.832525,
+        27.455185,
+        19.41859,
+        18.53714
+      ],
+      "median_us": 19.41859
+    },
+    {
+      "case": "dense_matches",
+      "n": 3000,
+      "m": 300,
+      "seed": 20264108,
+      "method": "rk",
+      "occurrences": 2701,
+      "correct_outputs_checked": true,
+      "runs_us": [
+        292.31879499999997,
+        289.65357,
+        295.56253,
+        285.73719,
+        281.31422
+      ],
+      "median_us": 289.65357
+    }
+  ],
+  "sink": 1491200,
+  "recorded_at_utc": "2026-11-08T14:54:55.860163+00:00",
+  "python_version": "3.12.14",
+  "host": {
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "logical_cpus_os": 9,
+    "cpu_model": "AMD EPYC 9V74 80-Core Processor",
+    "memory": "10206472 kB",
+    "cgroup_cpu_max": "not exposed",
+    "cgroup_memory_max": "not exposed"
+  },
+  "reproduce": "python tests/student/benchmark.py --samples 5 --iterations 200 --warmup 200",
+  "compile_command": "javac --release 17 -encoding UTF-8 -d Java/build/benchmark Java/source/*.java tests/student/Benchmark.java",
+  "java_command": "java -Xmx384m -cp Java/build/benchmark Benchmark 5 200 200"
+}

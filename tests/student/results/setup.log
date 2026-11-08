@@ -1,0 +1,7 @@
+$ python tools/run.py --language Java --setup
+Note: /workspace/scratch/4e1524beb0de/work/daa-assignment-4-archive-main/Java/source/Main.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Language: Java
+PASS setup: ping
+
+Exit status: 0

@@ -1,0 +1,51 @@
+$ python tools/run.py --language Java --check
+Note: /workspace/scratch/4e1524beb0de/work/daa-assignment-4-archive-main/Java/source/Main.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+Language: Java
+PASS public 1: example-ping
+PASS public 2: example-lcs
+PASS public 3: example-merge
+PASS public 4: example-tree
+PASS public 5: example-naive
+PASS public 6: example-kmp
+PASS public 7: example-rk
+PASS public 8: example-suffix
+PASS public 9: example-aho
+PASS public 10: lcs-empty
+PASS public 11: lcs-tie
+PASS public 12: lcs-not-substring
+PASS public 13: merge-empty
+PASS public 14: merge-one
+PASS public 15: merge-zero
+PASS public 16: merge-64bit
+PASS public 17: tree-empty
+PASS public 18: tree-negative
+PASS public 19: tree-tie
+PASS public 20: tree-zero
+PASS public 21: naive-empty-pattern
+PASS public 22: naive-both-empty
+PASS public 23: naive-long-pattern
+PASS public 24: naive-overlap
+PASS public 25: naive-case-spaces
+PASS public 26: kmp-empty-pattern
+PASS public 27: kmp-both-empty
+PASS public 28: kmp-long-pattern
+PASS public 29: kmp-overlap
+PASS public 30: kmp-case-spaces
+PASS public 31: rk-empty-pattern
+PASS public 32: rk-both-empty
+PASS public 33: rk-long-pattern
+PASS public 34: rk-overlap
+PASS public 35: rk-case-spaces
+PASS public 36: rk-collision
+PASS public 37: suffix-empty
+PASS public 38: suffix-one
+PASS public 39: suffix-overlap
+PASS public 40: suffix-order
+PASS public 41: aho-empty-dictionary
+PASS public 42: aho-no-texts
+PASS public 43: aho-overlap-duplicate
+PASS public 44: aho-suffix
+PASS state reset: two complete batches in one process
+
+Exit status: 0

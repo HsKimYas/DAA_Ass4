@@ -1,0 +1,35 @@
+$ python tests/student/benchmark.py --samples 5 --iterations 200 --warmup 200
+Note: /workspace/scratch/4e1524beb0de/work/daa-assignment-4-archive-main/Java/source/Main.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+PASS benchmark: 9 input pairs, 27 method/case rows; independent full-output checks passed.
+Java 17.0.21; 5 measured samples x 200 calls.
+random                 n= 500 m= 50 naive median=8.614 us/call
+random                 n= 500 m= 50 kmp   median=10.454 us/call
+random                 n= 500 m= 50 rk    median=11.034 us/call
+random                 n=1500 m=150 naive median=4.220 us/call
+random                 n=1500 m=150 kmp   median=3.291 us/call
+random                 n=1500 m=150 rk    median=12.245 us/call
+random                 n=3000 m=300 naive median=8.809 us/call
+random                 n=3000 m=300 kmp   median=7.975 us/call
+random                 n=3000 m=300 rk    median=24.847 us/call
+repetitive_mismatch    n= 500 m= 50 naive median=14.259 us/call
+repetitive_mismatch    n= 500 m= 50 kmp   median=2.166 us/call
+repetitive_mismatch    n= 500 m= 50 rk    median=3.798 us/call
+repetitive_mismatch    n=1500 m=150 naive median=139.184 us/call
+repetitive_mismatch    n=1500 m=150 kmp   median=8.237 us/call
+repetitive_mismatch    n=1500 m=150 rk    median=13.064 us/call
+repetitive_mismatch    n=3000 m=300 naive median=520.667 us/call
+repetitive_mismatch    n=3000 m=300 kmp   median=13.512 us/call
+repetitive_mismatch    n=3000 m=300 rk    median=23.922 us/call
+dense_matches          n= 500 m= 50 naive median=13.364 us/call
+dense_matches          n= 500 m= 50 kmp   median=4.275 us/call
+dense_matches          n= 500 m= 50 rk    median=14.803 us/call
+dense_matches          n=1500 m=150 naive median=68.467 us/call
+dense_matches          n=1500 m=150 kmp   median=17.285 us/call
+dense_matches          n=1500 m=150 rk    median=83.935 us/call
+dense_matches          n=3000 m=300 naive median=236.725 us/call
+dense_matches          n=3000 m=300 kmp   median=19.419 us/call
+dense_matches          n=3000 m=300 rk    median=289.654 us/call
+Raw measurements: tests/student/results/benchmark_results.json and benchmark_results.csv
+
+Exit status: 0

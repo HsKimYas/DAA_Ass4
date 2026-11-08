@@ -1,0 +1,55 @@
+{
+  "template_commit": "4686cc60334aa189c2ac168e10a82d882b32858c",
+  "files": [
+    {
+      "path": "README.md",
+      "matches_archive": true,
+      "sha256": "7bfeba44eb4289af10a884e3d096a1ac8aacfae463f03b77a37e24b3f89e01b0"
+    },
+    {
+      "path": "docs/Assignment_4_EN.md",
+      "matches_archive": true,
+      "sha256": "78a68e834a8a8f81d0dc5cb8101b45962aceec3af5fa1dc6cd3b65fc00fe5cb0"
+    },
+    {
+      "path": "docs/guide/CONTRACTS.md",
+      "matches_archive": true,
+      "sha256": "b08d6cf05ea9561e19d4788294668311cc03bcab2fd3c26e42a195daac5fce65"
+    },
+    {
+      "path": "docs/guide/RUBRIC.md",
+      "matches_archive": true,
+      "sha256": "17c0cdee056b8d699e2e1c072b914db21e4dc73fb386c35ad93bf2a2d0c97c31"
+    },
+    {
+      "path": "docs/guide/TESTING.md",
+      "matches_archive": true,
+      "sha256": "ca90de77110c1b175b66a07862724926ee40741c3b07588471eda445d29450e7"
+    },
+    {
+      "path": "docs/guide/SUBMISSION.md",
+      "matches_archive": true,
+      "sha256": "af2215119815cd2efa02fa568bce0095b2dacee3eb2233a013fa5a33029338ad"
+    },
+    {
+      "path": "tools/run.py",
+      "matches_archive": true,
+      "sha256": "82aa226638ee8f3e42f7a0300bed59f8fcbf8f42d99b33c040637f4381f47c64"
+    },
+    {
+      "path": "tools/public_validate.py",
+      "matches_archive": true,
+      "sha256": "e226f048216990b3c890ab22545e16e7493fb62b7e01985716483aeb5ca7dbae"
+    },
+    {
+      "path": ".github/workflows/public.yml",
+      "matches_archive": true,
+      "sha256": "c220b66742fbd341c77bff3394c50729a56fb6702274f2704bcf1b4cd26ab7d2"
+    },
+    {
+      "path": "assignment.json",
+      "matches_archive": true,
+      "sha256": "3c75171713bdd6ff2fa6d1a5d2b60fe6ad53ffd7ce983c25d669722433844ce6"
+    }
+  ]
+}

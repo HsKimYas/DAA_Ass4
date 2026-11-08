@@ -1,0 +1,30 @@
+PASS Java compilation (--release 17)
+Seed: 20261108; named cases: 84; randomized oracle cases: 910
+PASS small_mixed_twice_one_process: 1988/1988, 0.143 s wall, 98094 output bytes
+PASS scale_lcs_identical_1000: 1/1, 0.059 s wall, 1030 output bytes
+PASS scale_lcs_shifted_1000: 1/1, 0.058 s wall, 1028 output bytes
+PASS scale_lcs_disjoint_1000: 1/1, 0.070 s wall, 27 output bytes
+PASS scale_merge_200_large: 1/1, 0.055 s wall, 2488 output bytes
+PASS scale_merge_200_zero: 1/1, 0.060 s wall, 2586 output bytes
+PASS scale_tree_chain_100000: 1/1, 0.192 s wall, 294484 output bytes
+PASS scale_tree_star_100000: 1/1, 0.216 s wall, 588923 output bytes
+PASS scale_tree_negative_chain_100000: 1/1, 0.178 s wall, 27 output bytes
+PASS scale_naive_common_maximum: 1/1, 0.038 s wall, 18 output bytes
+PASS scale_kmp_common_maximum: 1/1, 0.044 s wall, 18 output bytes
+PASS scale_rk_common_maximum: 1/1, 0.037 s wall, 18 output bytes
+PASS scale_naive_long_prefix: 1/1, 0.053 s wall, 17 output bytes
+PASS scale_kmp_dense_200000: 1/1, 0.116 s wall, 588913 output bytes
+PASS scale_kmp_empty_200000: 1/1, 0.121 s wall, 1288913 output bytes
+PASS scale_kmp_periodic_200000: 1/1, 0.119 s wall, 294468 output bytes
+PASS scale_kmp_long_prefix: 1/1, 0.090 s wall, 17 output bytes
+PASS scale_rk_product_limit: 1/1, 0.073 s wall, 38911 output bytes
+PASS scale_rk_pattern_10000: 1/1, 0.055 s wall, 17 output bytes
+PASS scale_rk_collisions: 1/1, 0.044 s wall, 12238 output bytes
+PASS scale_suffix_equal_50000: 1/1, 0.136 s wall, 627810 output bytes
+PASS scale_suffix_periodic_50000: 1/1, 0.129 s wall, 627805 output bytes
+PASS scale_suffix_ascii_50000: 1/1, 0.118 s wall, 628391 output bytes
+PASS scale_aho_states_100001: 1/1, 0.121 s wall, 22 output bytes
+PASS scale_aho_states_100_texts: 1/1, 0.155 s wall, 413 output bytes
+PASS scale_aho_nested_dense: 1/1, 0.079 s wall, 3144 output bytes
+PASS scale_aho_10000_duplicates_100_texts: 1/1, 0.235 s wall, 5000213 output bytes
+PASS TOTAL: 2014/2014 case executions, 5.146 s including compilation, oracles and verification
