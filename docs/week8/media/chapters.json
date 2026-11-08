@@ -1,0 +1,206 @@
+[
+  {
+    "start": 0.0,
+    "stamp": "00:00",
+    "title": "Dynamic programming patterns",
+    "ru": "Паттерны динамического программирования"
+  },
+  {
+    "start": 70.944,
+    "stamp": "01:10",
+    "title": "Learning outcomes and reading",
+    "ru": "Результаты обучения и чтение"
+  },
+  {
+    "start": 144.288,
+    "stamp": "02:24",
+    "title": "Why stored answers help",
+    "ru": "Зачем сохранять ответы"
+  },
+  {
+    "start": 215.472,
+    "stamp": "03:35",
+    "title": "Fibonacci: repeated subproblems",
+    "ru": "Fibonacci: повторяющиеся подзадачи"
+  },
+  {
+    "start": 290.904,
+    "stamp": "04:50",
+    "title": "Memoization and tabulation",
+    "ru": "Мемоизация и табуляция"
+  },
+  {
+    "start": 364.2,
+    "stamp": "06:04",
+    "title": "A complete DP specification",
+    "ru": "Полное описание DP"
+  },
+  {
+    "start": 436.488,
+    "stamp": "07:16",
+    "title": "Three shapes of subproblems",
+    "ru": "Три формы подзадач"
+  },
+  {
+    "start": 505.488,
+    "stamp": "08:25",
+    "title": "Subsequence and substring",
+    "ru": "Подпоследовательность и подстрока"
+  },
+  {
+    "start": 574.992,
+    "stamp": "09:34",
+    "title": "Longest increasing subsequence",
+    "ru": "Наибольшая возрастающая подпоследовательность"
+  },
+  {
+    "start": 647.016,
+    "stamp": "10:47",
+    "title": "LIS: a complete trace",
+    "ru": "НВП: полный разбор"
+  },
+  {
+    "start": 719.664,
+    "stamp": "11:59",
+    "title": "LIS reconstruction in Java",
+    "ru": "Восстановление НВП на Java"
+  },
+  {
+    "start": 785.52,
+    "stamp": "13:05",
+    "title": "LCS: two prefixes define a state",
+    "ru": "НОП: состояние из двух префиксов"
+  },
+  {
+    "start": 850.848,
+    "stamp": "14:10",
+    "title": "LCS recurrence",
+    "ru": "Переход для НОП"
+  },
+  {
+    "start": 925.08,
+    "stamp": "15:25",
+    "title": "LCS table for ABCDE and ACE",
+    "ru": "Таблица НОП для ABCDE и ACE"
+  },
+  {
+    "start": 989.784,
+    "stamp": "16:29",
+    "title": "LCS backtracking",
+    "ru": "Обратный проход по НОП"
+  },
+  {
+    "start": 1061.256,
+    "stamp": "17:41",
+    "title": "LCS implementation in Java",
+    "ru": "Реализация НОП на Java"
+  },
+  {
+    "start": 1134.72,
+    "stamp": "18:54",
+    "title": "Related sequence problems",
+    "ru": "Родственные задачи на последовательности"
+  },
+  {
+    "start": 1202.304,
+    "stamp": "20:02",
+    "title": "0/1 knapsack as a bridge",
+    "ru": "Рюкзак 0/1 как связующий пример"
+  },
+  {
+    "start": 1269.432,
+    "stamp": "21:09",
+    "title": "Why the knapsack loop runs downward",
+    "ru": "Почему цикл рюкзака идёт вниз"
+  },
+  {
+    "start": 1339.344,
+    "stamp": "22:19",
+    "title": "Partitioning a matrix chain",
+    "ru": "Разбиение цепочки матриц"
+  },
+  {
+    "start": 1410.696,
+    "stamp": "23:30",
+    "title": "Two parenthesizations, two costs",
+    "ru": "Два порядка вычислений, две стоимости"
+  },
+  {
+    "start": 1481.472,
+    "stamp": "24:41",
+    "title": "The interval recurrence",
+    "ru": "Интервальный переход"
+  },
+  {
+    "start": 1548.072,
+    "stamp": "25:48",
+    "title": "The lecture example: cost 26,000",
+    "ru": "Пример из лекции: стоимость 26 000"
+  },
+  {
+    "start": 1622.664,
+    "stamp": "27:02",
+    "title": "Matrix-chain loops in Java",
+    "ru": "Циклы матричной цепочки на Java"
+  },
+  {
+    "start": 1698.48,
+    "stamp": "28:18",
+    "title": "Another interval problem: stick cutting",
+    "ru": "Другая интервальная задача: разрезание палки"
+  },
+  {
+    "start": 1766.16,
+    "stamp": "29:26",
+    "title": "Tree DP: choosing guests",
+    "ru": "DP на дереве: выбор гостей"
+  },
+  {
+    "start": 1832.904,
+    "stamp": "30:32",
+    "title": "Two states per tree node",
+    "ru": "Два состояния на вершину"
+  },
+  {
+    "start": 1901.496,
+    "stamp": "31:41",
+    "title": "Tree DP: the complete calculation",
+    "ru": "DP на дереве: полный расчёт"
+  },
+  {
+    "start": 1968.768,
+    "stamp": "32:48",
+    "title": "Recovering the selected nodes",
+    "ru": "Восстановление выбранных вершин"
+  },
+  {
+    "start": 2040.048,
+    "stamp": "34:00",
+    "title": "Tree DP in reverse traversal order",
+    "ru": "DP на дереве в обратном порядке обхода"
+  },
+  {
+    "start": 2116.032,
+    "stamp": "35:16",
+    "title": "Correctness and complexity",
+    "ru": "Корректность и сложность"
+  },
+  {
+    "start": 2194.224,
+    "stamp": "36:34",
+    "title": "Small tests reveal state errors",
+    "ru": "Малые тесты обнаруживают ошибки состояния"
+  },
+  {
+    "start": 2274.816,
+    "stamp": "37:54",
+    "title": "DP problem-solving questions",
+    "ru": "Вопросы по динамическому программированию"
+  },
+  {
+    "start": 2347.704,
+    "stamp": "39:07",
+    "title": "References and review",
+    "ru": "Литература и повторение"
+  }
+]

@@ -1,0 +1,36 @@
+# Week 8 video chapters
+
+- 00:00 Dynamic programming patterns
+- 01:10 Learning outcomes and reading
+- 02:24 Why stored answers help
+- 03:35 Fibonacci: repeated subproblems
+- 04:50 Memoization and tabulation
+- 06:04 A complete DP specification
+- 07:16 Three shapes of subproblems
+- 08:25 Subsequence and substring
+- 09:34 Longest increasing subsequence
+- 10:47 LIS: a complete trace
+- 11:59 LIS reconstruction in Java
+- 13:05 LCS: two prefixes define a state
+- 14:10 LCS recurrence
+- 15:25 LCS table for ABCDE and ACE
+- 16:29 LCS backtracking
+- 17:41 LCS implementation in Java
+- 18:54 Related sequence problems
+- 20:02 0/1 knapsack as a bridge
+- 21:09 Why the knapsack loop runs downward
+- 22:19 Partitioning a matrix chain
+- 23:30 Two parenthesizations, two costs
+- 24:41 The interval recurrence
+- 25:48 The lecture example: cost 26,000
+- 27:02 Matrix-chain loops in Java
+- 28:18 Another interval problem: stick cutting
+- 29:26 Tree DP: choosing guests
+- 30:32 Two states per tree node
+- 31:41 Tree DP: the complete calculation
+- 32:48 Recovering the selected nodes
+- 34:00 Tree DP in reverse traversal order
+- 35:16 Correctness and complexity
+- 36:34 Small tests reveal state errors
+- 37:54 DP problem-solving questions
+- 39:07 References and review

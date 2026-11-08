@@ -1,0 +1,751 @@
+[
+  {
+    "input": {
+      "task": "ping"
+    },
+    "output": {
+      "status": "ready"
+    },
+    "name": "example-ping"
+  },
+  {
+    "input": {
+      "task": "lcs",
+      "a": "tea_time",
+      "b": "team"
+    },
+    "output": {
+      "length": 4,
+      "sequence": "team"
+    },
+    "name": "example-lcs"
+  },
+  {
+    "input": {
+      "task": "merge",
+      "sizes": [
+        2,
+        3,
+        4
+      ]
+    },
+    "output": {
+      "cost": 14,
+      "plan": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    },
+    "name": "example-merge"
+  },
+  {
+    "input": {
+      "task": "tree",
+      "n": 3,
+      "weights": [
+        4,
+        9,
+        6
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "output": {
+      "weight": 10,
+      "selected": [
+        0,
+        2
+      ]
+    },
+    "name": "example-tree"
+  },
+  {
+    "input": {
+      "task": "naive",
+      "text": "aaaaa",
+      "pattern": "aaa"
+    },
+    "output": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    },
+    "name": "example-naive"
+  },
+  {
+    "input": {
+      "task": "kmp",
+      "text": "abababa",
+      "pattern": "aba"
+    },
+    "output": {
+      "positions": [
+        0,
+        2,
+        4
+      ]
+    },
+    "name": "example-kmp"
+  },
+  {
+    "input": {
+      "task": "rk",
+      "text": "abdj",
+      "pattern": "ab"
+    },
+    "output": {
+      "positions": [
+        0
+      ]
+    },
+    "name": "example-rk"
+  },
+  {
+    "input": {
+      "task": "suffix",
+      "text": "banana"
+    },
+    "output": {
+      "sa": [
+        5,
+        3,
+        1,
+        0,
+        4,
+        2
+      ],
+      "lcp": [
+        0,
+        1,
+        3,
+        0,
+        0,
+        2
+      ],
+      "repeated": "ana"
+    },
+    "name": "example-suffix"
+  },
+  {
+    "input": {
+      "task": "aho",
+      "patterns": [
+        "he",
+        "she",
+        "he"
+      ],
+      "texts": [
+        "sheshe",
+        "sheshe",
+        ""
+      ]
+    },
+    "output": {
+      "counts": [
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          2,
+          2,
+          2
+        ],
+        [
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "name": "example-aho"
+  },
+  {
+    "name": "lcs-empty",
+    "input": {
+      "task": "lcs",
+      "a": "",
+      "b": "abc"
+    },
+    "output": {
+      "length": 0,
+      "sequence": ""
+    }
+  },
+  {
+    "name": "lcs-tie",
+    "input": {
+      "task": "lcs",
+      "a": "ABC",
+      "b": "BAC"
+    },
+    "output": {
+      "length": 2,
+      "sequence": "AC"
+    }
+  },
+  {
+    "name": "lcs-not-substring",
+    "input": {
+      "task": "lcs",
+      "a": "axbyc",
+      "b": "abc"
+    },
+    "output": {
+      "length": 3,
+      "sequence": "abc"
+    }
+  },
+  {
+    "name": "merge-empty",
+    "input": {
+      "task": "merge",
+      "sizes": []
+    },
+    "output": {
+      "cost": 0,
+      "plan": []
+    }
+  },
+  {
+    "name": "merge-one",
+    "input": {
+      "task": "merge",
+      "sizes": [
+        10
+      ]
+    },
+    "output": {
+      "cost": 0,
+      "plan": []
+    }
+  },
+  {
+    "name": "merge-zero",
+    "input": {
+      "task": "merge",
+      "sizes": [
+        0,
+        0,
+        0
+      ]
+    },
+    "output": {
+      "cost": 0,
+      "plan": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    }
+  },
+  {
+    "name": "merge-64bit",
+    "input": {
+      "task": "merge",
+      "sizes": [
+        1000000000,
+        1000000000,
+        1000000000
+      ]
+    },
+    "output": {
+      "cost": 5000000000,
+      "plan": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ]
+    }
+  },
+  {
+    "name": "tree-empty",
+    "input": {
+      "task": "tree",
+      "n": 0,
+      "weights": [],
+      "edges": []
+    },
+    "output": {
+      "weight": 0,
+      "selected": []
+    }
+  },
+  {
+    "name": "tree-negative",
+    "input": {
+      "task": "tree",
+      "n": 3,
+      "weights": [
+        -4,
+        -1,
+        -5
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ]
+      ]
+    },
+    "output": {
+      "weight": 0,
+      "selected": []
+    }
+  },
+  {
+    "name": "tree-tie",
+    "input": {
+      "task": "tree",
+      "n": 2,
+      "weights": [
+        5,
+        5
+      ],
+      "edges": [
+        [
+          0,
+          1
+        ]
+      ]
+    },
+    "output": {
+      "weight": 5,
+      "selected": [
+        0
+      ]
+    }
+  },
+  {
+    "name": "tree-zero",
+    "input": {
+      "task": "tree",
+      "n": 1,
+      "weights": [
+        0
+      ],
+      "edges": []
+    },
+    "output": {
+      "weight": 0,
+      "selected": []
+    }
+  },
+  {
+    "name": "naive-empty-pattern",
+    "input": {
+      "task": "naive",
+      "text": "ab",
+      "pattern": ""
+    },
+    "output": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "name": "naive-both-empty",
+    "input": {
+      "task": "naive",
+      "text": "",
+      "pattern": ""
+    },
+    "output": {
+      "positions": [
+        0
+      ]
+    }
+  },
+  {
+    "name": "naive-long-pattern",
+    "input": {
+      "task": "naive",
+      "text": "a",
+      "pattern": "aaa"
+    },
+    "output": {
+      "positions": []
+    }
+  },
+  {
+    "name": "naive-overlap",
+    "input": {
+      "task": "naive",
+      "text": "aaaa",
+      "pattern": "aa"
+    },
+    "output": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "name": "naive-case-spaces",
+    "input": {
+      "task": "naive",
+      "text": "A a A",
+      "pattern": "A"
+    },
+    "output": {
+      "positions": [
+        0,
+        4
+      ]
+    }
+  },
+  {
+    "name": "kmp-empty-pattern",
+    "input": {
+      "task": "kmp",
+      "text": "ab",
+      "pattern": ""
+    },
+    "output": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "name": "kmp-both-empty",
+    "input": {
+      "task": "kmp",
+      "text": "",
+      "pattern": ""
+    },
+    "output": {
+      "positions": [
+        0
+      ]
+    }
+  },
+  {
+    "name": "kmp-long-pattern",
+    "input": {
+      "task": "kmp",
+      "text": "a",
+      "pattern": "aaa"
+    },
+    "output": {
+      "positions": []
+    }
+  },
+  {
+    "name": "kmp-overlap",
+    "input": {
+      "task": "kmp",
+      "text": "aaaa",
+      "pattern": "aa"
+    },
+    "output": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "name": "kmp-case-spaces",
+    "input": {
+      "task": "kmp",
+      "text": "A a A",
+      "pattern": "A"
+    },
+    "output": {
+      "positions": [
+        0,
+        4
+      ]
+    }
+  },
+  {
+    "name": "rk-empty-pattern",
+    "input": {
+      "task": "rk",
+      "text": "ab",
+      "pattern": ""
+    },
+    "output": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "name": "rk-both-empty",
+    "input": {
+      "task": "rk",
+      "text": "",
+      "pattern": ""
+    },
+    "output": {
+      "positions": [
+        0
+      ]
+    }
+  },
+  {
+    "name": "rk-long-pattern",
+    "input": {
+      "task": "rk",
+      "text": "a",
+      "pattern": "aaa"
+    },
+    "output": {
+      "positions": []
+    }
+  },
+  {
+    "name": "rk-overlap",
+    "input": {
+      "task": "rk",
+      "text": "aaaa",
+      "pattern": "aa"
+    },
+    "output": {
+      "positions": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  {
+    "name": "rk-case-spaces",
+    "input": {
+      "task": "rk",
+      "text": "A a A",
+      "pattern": "A"
+    },
+    "output": {
+      "positions": [
+        0,
+        4
+      ]
+    }
+  },
+  {
+    "name": "rk-collision",
+    "input": {
+      "task": "rk",
+      "text": "bcek",
+      "pattern": "bc"
+    },
+    "output": {
+      "positions": [
+        0
+      ]
+    }
+  },
+  {
+    "name": "suffix-empty",
+    "input": {
+      "task": "suffix",
+      "text": ""
+    },
+    "output": {
+      "sa": [],
+      "lcp": [],
+      "repeated": ""
+    }
+  },
+  {
+    "name": "suffix-one",
+    "input": {
+      "task": "suffix",
+      "text": "$"
+    },
+    "output": {
+      "sa": [
+        0
+      ],
+      "lcp": [
+        0
+      ],
+      "repeated": ""
+    }
+  },
+  {
+    "name": "suffix-overlap",
+    "input": {
+      "task": "suffix",
+      "text": "aaaa"
+    },
+    "output": {
+      "sa": [
+        3,
+        2,
+        1,
+        0
+      ],
+      "lcp": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "repeated": "aaa"
+    }
+  },
+  {
+    "name": "suffix-order",
+    "input": {
+      "task": "suffix",
+      "text": "caba"
+    },
+    "output": {
+      "sa": [
+        3,
+        1,
+        2,
+        0
+      ],
+      "lcp": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "repeated": "a"
+    }
+  },
+  {
+    "name": "aho-empty-dictionary",
+    "input": {
+      "task": "aho",
+      "patterns": [],
+      "texts": [
+        "a",
+        ""
+      ]
+    },
+    "output": {
+      "counts": [
+        [],
+        []
+      ]
+    }
+  },
+  {
+    "name": "aho-no-texts",
+    "input": {
+      "task": "aho",
+      "patterns": [
+        "a"
+      ],
+      "texts": []
+    },
+    "output": {
+      "counts": []
+    }
+  },
+  {
+    "name": "aho-overlap-duplicate",
+    "input": {
+      "task": "aho",
+      "patterns": [
+        "a",
+        "aa",
+        "a"
+      ],
+      "texts": [
+        "aaa",
+        "",
+        "aaa"
+      ]
+    },
+    "output": {
+      "counts": [
+        [
+          3,
+          2,
+          3
+        ],
+        [
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          2,
+          3
+        ]
+      ]
+    }
+  },
+  {
+    "name": "aho-suffix",
+    "input": {
+      "task": "aho",
+      "patterns": [
+        "cat",
+        "at"
+      ],
+      "texts": [
+        "cat",
+        "cat"
+      ]
+    },
+    "output": {
+      "counts": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    }
+  }
+]

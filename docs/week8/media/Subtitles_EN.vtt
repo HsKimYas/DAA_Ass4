@@ -1,0 +1,1496 @@
+WEBVTT
+
+00:00:00.109 --> 00:00:04.035
+Dynamic programming solves problems by expressing their answers through
+
+00:00:04.049 --> 00:00:08.777
+smaller subproblems and storing results that will be needed again Three
+
+00:00:08.777 --> 00:00:14.796
+structures occur frequently a position in a sequence a contiguous interval
+
+00:00:15.109 --> 00:00:19.226
+and a rooted subtree These structures determine what a state needs
+
+00:00:19.226 --> 00:00:23.125
+to remember and which answers must be available before it can be
+
+00:00:23.125 --> 00:00:28.207
+computed We will examine increasing subsequences and common subsequences
+
+00:00:28.628 --> 00:00:33.533
+then use interval states to choose parentheses for matrix multiplication
+
+00:00:34.008 --> 00:00:38.750
+Finally we will select a maximum weight independent set in a tree
+
+00:00:39.185 --> 00:00:43.750
+Each example begins with the meaning of its state The recurrence follows
+
+00:00:43.750 --> 00:00:48.668
+from the legal choices and the evaluation
+order follows from the dependencies
+
+00:00:49.117 --> 00:00:54.443
+We will also recover the actual sequence expression or selected vertices
+
+00:00:54.701 --> 00:00:59.117
+because the optimal value alone does not identify the solution The
+
+00:00:59.117 --> 00:01:03.682
+same questions apply throughout what information does this subproblem
+
+00:01:03.682 --> 00:01:08.859
+need which choices cover all valid solutions and why can smaller optimal
+
+00:01:08.872 --> 00:01:09.946
+answers be combined
+
+00:01:11.053 --> 00:01:15.509
+A complete dynamic programming solution includes a precise state definition
+
+00:01:15.998 --> 00:01:21.053
+a recurrence base cases an evaluation order and the location of the
+
+00:01:21.066 --> 00:01:25.170
+final answer When the required output is a sequence or a set
+
+00:01:25.237 --> 00:01:30.373
+rather than its value the solution also needs reconstruction Correctness
+
+00:01:30.523 --> 00:01:34.966
+can be established by induction in the dependency order Each transition
+
+00:01:35.102 --> 00:01:40.862
+must construct a legal solution and every optimal solution must correspond
+
+00:01:40.862 --> 00:01:46.080
+to a choice considered by that transition For matrix chains the final
+
+00:01:46.080 --> 00:01:51.284
+multiplication determines the split For a common subsequence the final
+
+00:01:51.284 --> 00:01:56.256
+characters determine the two cases For a tree the choice at the
+
+00:01:56.270 --> 00:02:00.835
+subtree root determines which child states are allowed Chapter fourteen
+
+00:02:00.835 --> 00:02:05.251
+of Introduction to Algorithms develops these ideas through rod cutting
+
+00:02:05.727 --> 00:02:10.496
+matrix-chain multiplication and longest
+common subsequences The company-party
+
+00:02:10.496 --> 00:02:16.664
+problem gives a tree application Fibonacci and zero-one knapsack provide
+
+00:02:16.678 --> 00:02:21.542
+additional examples of how repeated subproblems and state restrictions
+
+00:02:21.759 --> 00:02:23.295
+affect the implementation
+
+00:02:24.410 --> 00:02:29.451
+Dynamic programming is useful when a problem can be expressed using
+
+00:02:29.451 --> 00:02:34.451
+smaller subproblems and those subproblems recur Optimal substructure
+
+00:02:34.451 --> 00:02:39.152
+means that once a relevant choice is fixed the remaining parts can
+
+00:02:39.166 --> 00:02:44.315
+use their own optimal solutions We must justify this property rather
+
+00:02:44.329 --> 00:02:48.215
+than assume it Overlap means that separate branches of a recursive
+
+00:02:48.215 --> 00:02:53.323
+search ask the same question again Saving the answer prevents repeated
+
+00:02:53.323 --> 00:02:58.120
+work Compare this with merge sort Its two recursive calls work on
+
+00:02:58.120 --> 00:03:02.399
+separate halves and there is normally no repeated request for the same
+
+00:03:02.399 --> 00:03:07.277
+half within one run A dynamic programming recurrence often forms a
+
+00:03:07.277 --> 00:03:13.147
+directed acyclic graph of dependencies This
+connects directly to topological
+
+00:03:13.160 --> 00:03:18.364
+ordering A state is sufficient only when two situations with that same
+
+00:03:18.364 --> 00:03:22.304
+state have the same possible future decisions and the same relevant
+
+00:03:22.304 --> 00:03:28.405
+outcome If capacity affects future choices for example the state must
+
+00:03:28.418 --> 00:03:33.853
+include capacity A table alone does not make an algorithm correct or
+
+00:03:33.853 --> 00:03:34.492
+efficient
+
+00:03:35.567 --> 00:03:40.961
+Consider Fibonacci numbers with zero as the zeroth value and one as
+
+00:03:40.961 --> 00:03:46.369
+the first To compute the fifth value recursively we request the fourth
+
+00:03:46.423 --> 00:03:51.640
+and third Computing the fourth requests the
+third again The same duplication
+
+00:03:51.640 --> 00:03:56.409
+continues at smaller indices A memoized function checks whether an
+
+00:03:56.409 --> 00:04:01.477
+answer already exists before making recursive calls A bottom-up version
+
+00:04:01.708 --> 00:04:07.021
+fills the values in increasing index order Both compute only a linear
+
+00:04:07.034 --> 00:04:11.708
+number of distinct states with constant work per state under a fixed-width
+
+00:04:11.899 --> 00:04:16.749
+arithmetic model The naive recursive method takes exponential time
+
+00:04:17.306 --> 00:04:21.450
+while these versions take linear time For the fifth value the table
+
+00:04:21.464 --> 00:04:27.673
+is zero one one two three five This is a warm-up not
+
+00:04:27.687 --> 00:04:33.380
+the main intellectual challenge Fibonacci already gives us the recurrence
+
+00:04:33.801 --> 00:04:37.727
+In more interesting problems deciding what the state should mean is
+
+00:04:37.741 --> 00:04:43.094
+the difficult part Also remember that fixed-width Java integers eventually
+
+00:04:43.108 --> 00:04:48.760
+overflow If we use arbitrary precision numbers arithmetic cost grows
+
+00:04:48.774 --> 00:04:49.901
+with the number of bits
+
+00:04:51.026 --> 00:04:55.782
+There are two common ways to evaluate the same recurrence Memoization
+
+00:04:55.863 --> 00:05:00.619
+keeps a recursive description and stores completed answers It can avoid
+
+00:05:00.619 --> 00:05:04.029
+states that are never reached but it needs a call stack and
+
+00:05:04.029 --> 00:05:08.159
+a reliable way to distinguish a missing entry from a valid answer
+
+00:05:08.567 --> 00:05:13.159
+Zero is often a valid answer so a separate visited flag can
+
+00:05:13.173 --> 00:05:18.200
+be useful Tabulation chooses a valid order in advance and fills a
+
+00:05:18.200 --> 00:05:23.064
+table with loops It avoids recursive call overhead and often makes
+
+00:05:23.078 --> 00:05:29.070
+memory compression easier However it may also
+compute states that memoization
+
+00:05:29.246 --> 00:05:34.056
+never needs Therefore we should not claim that tabulation is always
+
+00:05:34.070 --> 00:05:39.151
+faster or always uses less memory These are implementation trade-offs
+
+00:05:39.627 --> 00:05:43.730
+For either approach correctness depends on the same state definition
+
+00:05:43.852 --> 00:05:48.676
+and recurrence Before changing one implementation into the other list
+
+00:05:48.676 --> 00:05:53.214
+the dependencies of a state The loop order must make those dependencies
+
+00:05:53.214 --> 00:05:58.132
+available For interval problems that usually means increasing interval
+
+00:05:58.146 --> 00:06:02.698
+length For a rooted tree it means processing children before their
+
+00:06:02.711 --> 00:06:03.214
+parent
+
+00:06:04.322 --> 00:06:10.273
+Here is the specification we will use for every example First define
+
+00:06:10.273 --> 00:06:15.219
+the state in words including exactly which input elements it covers
+
+00:06:15.423 --> 00:06:20.124
+and which restrictions apply Second list the choices that can produce
+
+00:06:20.138 --> 00:06:24.961
+a valid solution and turn them into a recurrence Third handle the
+
+00:06:24.974 --> 00:06:30.898
+smallest subproblems with explicit base cases Fourth choose an evaluation
+
+00:06:30.898 --> 00:06:36.673
+order and explain why every dependency is ready Fifth locate the answer
+
+00:06:36.673 --> 00:06:40.695
+to the original problem Sometimes it is the last table entry but
+
+00:06:40.695 --> 00:06:45.858
+sometimes it is the maximum over many entries Sixth decide whether
+
+00:06:45.858 --> 00:06:50.654
+we need an actual sequence a parenthesization or a set of selected
+
+00:06:50.654 --> 00:06:55.599
+nodes These outputs require reconstruction information or an appropriate
+
+00:06:55.599 --> 00:07:01.455
+backtracking procedure Finally justify correctness and analyze time
+
+00:07:01.646 --> 00:07:06.306
+and memory A useful time estimate is the number of states multiplied
+
+00:07:06.306 --> 00:07:10.042
+by the amount of work per state with separate accounting when the
+
+00:07:10.042 --> 00:07:14.472
+work varies You should be able to apply this checklist before writing
+
+00:07:14.648 --> 00:07:15.491
+any loops
+
+00:07:16.597 --> 00:07:21.203
+The three patterns differ mainly in the structure of their states In
+
+00:07:21.203 --> 00:07:27.235
+longest increasing subsequence one useful
+state records the best subsequence
+
+00:07:27.385 --> 00:07:32.262
+ending at a particular position In longest common subsequence the state
+
+00:07:32.276 --> 00:07:36.189
+uses a pair of prefix lengths because the answer depends on two
+
+00:07:36.189 --> 00:07:41.148
+strings In matrix-chain multiplication the natural question is the
+
+00:07:41.162 --> 00:07:46.773
+cheapest way to evaluate a contiguous interval of matrices In tree
+
+00:07:46.787 --> 00:07:51.760
+independent set a state refers to a rooted subtree and records whether
+
+00:07:51.773 --> 00:07:56.108
+its root is selected Notice that the dimensions of the table come
+
+00:07:56.271 --> 00:08:01.230
+from the information the subproblem needs They are not arbitrary choices
+
+00:08:01.678 --> 00:08:06.474
+A two-dimensional table can represent two prefixes two interval boundaries
+
+00:08:06.882 --> 00:08:12.303
+or a node and a binary condition Those
+meanings require different transitions
+
+00:08:12.466 --> 00:08:16.787
+and different orders A problem can first be classified by writing its
+
+00:08:16.800 --> 00:08:21.773
+state definition Recognizing a familiar pattern helps but the definition
+
+00:08:21.977 --> 00:08:24.491
+must still match the exact problem
+
+00:08:25.597 --> 00:08:29.292
+Before deriving a recurrence we need to understand the object we are
+
+00:08:29.306 --> 00:08:34.007
+choosing A subsequence preserves the order of the original elements
+
+00:08:34.306 --> 00:08:39.849
+but it may skip positions A substring uses consecutive positions In
+
+00:08:39.863 --> 00:08:44.021
+the string A B C D E A C E is a
+
+00:08:44.021 --> 00:08:49.197
+subsequence because we can keep positions one three and five It is
+
+00:08:49.197 --> 00:08:54.374
+not a substring because those positions are separated C D is both
+
+00:08:54.374 --> 00:08:59.768
+a substring and a subsequence E A is neither because it reverses
+
+00:08:59.768 --> 00:09:05.434
+the order This distinction changes algorithms Longest common substring
+
+00:09:05.570 --> 00:09:10.760
+uses a recurrence that resets a value after a mismatch Longest common
+
+00:09:10.773 --> 00:09:14.632
+subsequence can skip a character and keep the best result from a
+
+00:09:14.632 --> 00:09:19.333
+neighboring prefix state Ask yourself whether the problem allows gaps
+
+00:09:19.564 --> 00:09:25.067
+before choosing a formula For our examples an empty subsequence is
+
+00:09:25.067 --> 00:09:30.135
+allowed and repeated letters are distinct positions We match positions
+
+00:09:30.135 --> 00:09:33.980
+in increasing order even when their character values are equal
+
+00:09:35.087 --> 00:09:40.141
+Let us find a strictly increasing subsequence in the array three one
+
+00:09:40.386 --> 00:09:45.291
+two five four We define dp at index i as the length
+
+00:09:45.304 --> 00:09:50.060
+of the longest increasing subsequence ending exactly at that index
+
+00:09:50.522 --> 00:09:55.386
+The phrase ending exactly here is essential It means the current element
+
+00:09:55.590 --> 00:10:00.807
+must belong to the subsequence To extend an earlier solution we choose
+
+00:10:00.821 --> 00:10:05.386
+an earlier index j whose value is strictly smaller than the current
+
+00:10:05.386 --> 00:10:10.427
+value Appending the current element then adds one to the length stored
+
+00:10:10.427 --> 00:10:15.889
+at j We take the best such predecessor If no predecessor works
+
+00:10:16.133 --> 00:10:20.916
+the element alone gives length one The final answer is the maximum
+
+00:10:21.052 --> 00:10:26.677
+entry of the array because the best subsequence may end anywhere It
+
+00:10:26.677 --> 00:10:31.677
+is not automatically the last entry For empty input we return length
+
+00:10:31.690 --> 00:10:36.663
+zero Strict increase uses a less-than comparison Replacing it with
+
+00:10:36.677 --> 00:10:41.785
+less-than-or-equal solves the different problem of longest nondecreasing
+
+00:10:41.785 --> 00:10:46.011
+subsequence which treats equal adjacent values differently
+
+00:10:47.125 --> 00:10:51.445
+We now evaluate the array from left to right At index zero
+
+00:10:51.907 --> 00:10:57.206
+value three has no earlier predecessor so its length is one At
+
+00:10:57.220 --> 00:11:02.790
+index one value one cannot extend three so its length is also
+
+00:11:02.804 --> 00:11:07.858
+one At index two value two can extend one and reaches length
+
+00:11:07.858 --> 00:11:13.633
+two At index three value five can extend the subsequence one two
+
+00:11:13.932 --> 00:11:18.782
+reaching length three At index four value four can also extend one
+
+00:11:19.231 --> 00:11:24.163
+two and reaches length three It cannot extend five because four is
+
+00:11:24.176 --> 00:11:31.133
+smaller Our table is therefore one one two three three Several optimal
+
+00:11:31.133 --> 00:11:35.454
+answers can exist and a correct implementation may reconstruct either
+
+00:11:35.454 --> 00:11:41.989
+one two five or one two four Now predict the result for
+
+00:11:41.989 --> 00:11:48.266
+three three three A strictly increasing subsequence has length one
+
+00:11:48.755 --> 00:11:53.293
+For a decreasing array the answer is also one provided the array
+
+00:11:53.429 --> 00:11:58.239
+is nonempty These are useful tests for the comparison and initialization
+
+00:11:58.239 --> 00:11:58.674
+rules
+
+00:11:59.773 --> 00:12:04.555
+The length table does not directly contain a chosen subsequence To
+
+00:12:04.555 --> 00:12:09.718
+reconstruct one initialize a parent array with minus one Whenever an
+
+00:12:09.718 --> 00:12:15.153
+earlier index j improves the best length ending at i store j
+
+00:12:15.384 --> 00:12:19.528
+as the parent of i After filling the table find an index
+
+00:12:19.528 --> 00:12:23.686
+with maximum length and follow its parent links until the sentinel
+
+00:12:23.686 --> 00:12:28.373
+minus one We collect values in reverse order so we reverse the
+
+00:12:28.387 --> 00:12:32.789
+collected list before returning it In our example choosing the last
+
+00:12:32.803 --> 00:12:39.351
+maximum gives indices four two one in reverse Their values become one
+
+00:12:39.895 --> 00:12:44.582
+two four after reversal Different tie rules may produce a different
+
+00:12:44.596 --> 00:12:49.718
+optimal subsequence so tests should normally check its length increasing
+
+00:12:49.718 --> 00:12:53.645
+order and whether it is a subsequence of the input The double
+
+00:12:53.645 --> 00:12:58.523
+loop takes quadratic time and the two arrays use linear memory A
+
+00:12:58.536 --> 00:13:02.707
+binary search method reduces the time to n log n but its
+
+00:13:02.707 --> 00:13:04.515
+tails array has a different meaning
+
+00:13:05.629 --> 00:13:10.778
+Longest common subsequence compares two sequences Our first string
+
+00:13:10.928 --> 00:13:14.963
+is A B C D E and the second is A C
+
+00:13:14.977 --> 00:13:19.093
+E We define L at i j as the length of a
+
+00:13:19.107 --> 00:13:23.332
+longest common subsequence between the first i characters of A and
+
+00:13:23.346 --> 00:13:28.224
+the first j characters of B We use half-open prefix notation so
+
+00:13:28.224 --> 00:13:32.640
+a prefix of length i ends just before index i This makes
+
+00:13:32.640 --> 00:13:38.183
+the empty prefix natural The table has one extra row and one
+
+00:13:38.373 --> 00:13:44.555
+extra column Row zero and column zero contain zeros because an empty
+
+00:13:44.555 --> 00:13:48.971
+sequence has no nonempty common subsequence with any other sequence
+
+00:13:49.419 --> 00:13:53.631
+The original problem is the table entry at the two full lengths
+
+00:13:54.066 --> 00:13:57.436
+We are not requiring the current last characters to appear in the
+
+00:13:57.436 --> 00:14:01.607
+answer which is different from our LIS state Keep this difference in
+
+00:14:01.607 --> 00:14:06.675
+mind when locating the result In this simple example A C E
+
+00:14:06.675 --> 00:14:09.854
+is common to both strings and has length three
+
+00:14:10.957 --> 00:14:15.576
+To derive the LCS recurrence compare the last characters of the two
+
+00:14:15.590 --> 00:14:21.310
+prefixes If they are equal we can extend an optimal common subsequence
+
+00:14:21.324 --> 00:14:25.617
+of the two shorter prefixes by this matching character The value is
+
+00:14:25.617 --> 00:14:31.038
+one plus the diagonal entry If the characters differ a common subsequence
+
+00:14:31.052 --> 00:14:35.454
+cannot use both as its final matching pair At least one of
+
+00:14:35.454 --> 00:14:39.788
+these final positions is unused We therefore consider skipping the
+
+00:14:39.788 --> 00:14:44.082
+last position of A or skipping the last position of B and
+
+00:14:44.095 --> 00:14:48.688
+take the larger answer These choices cover all possibilities for an
+
+00:14:48.701 --> 00:14:54.503
+optimal solution The base cases handle either empty prefix A row-by-row
+
+00:14:54.503 --> 00:15:00.101
+evaluation from small indices to large indices makes the diagonal above
+
+00:15:00.576 --> 00:15:05.223
+and left dependencies available Notice that a mismatch does not reset
+
+00:15:05.237 --> 00:15:10.359
+the answer to zero Resetting would discard useful subsequences containing
+
+00:15:10.372 --> 00:15:16.052
+earlier matches That rule belongs to the longest common substring problem
+
+00:15:16.487 --> 00:15:21.133
+where consecutive positions are required Write the state sentence beside
+
+00:15:21.133 --> 00:15:24.082
+the recurrence to keep these problems separate
+
+00:15:25.175 --> 00:15:28.857
+Let us fill the complete table for our two strings The first
+
+00:15:28.857 --> 00:15:34.075
+row and first column are zero Comparing A with A gives one
+
+00:15:34.618 --> 00:15:39.156
+and that value remains available as the second prefix grows On the
+
+00:15:39.156 --> 00:15:43.748
+row for B no new character matches the current characters of A
+
+00:15:43.762 --> 00:15:47.743
+C E so the best value stays one On the row for
+
+00:15:47.743 --> 00:15:52.322
+C and column for C we add one to the diagonal value
+
+00:15:52.322 --> 00:15:56.941
+one obtaining two At the next column we keep that value even
+
+00:15:56.941 --> 00:16:01.276
+though C and E differ The row for D also preserves the
+
+00:16:01.289 --> 00:16:07.091
+best length two Finally E matches E and extends the diagonal length
+
+00:16:07.104 --> 00:16:12.118
+two to three The bottom-right entry is three Before looking at the
+
+00:16:12.118 --> 00:16:16.493
+finished row predict the value at the D row and E column
+
+00:16:16.941 --> 00:16:22.498
+It is two representing the common subsequence A C This table is
+
+00:16:22.498 --> 00:16:27.662
+a record of prefix questions so every entry has a concrete interpretation
+
+00:16:27.675 --> 00:16:28.803
+beyond its number
+
+00:16:29.893 --> 00:16:34.879
+To recover a longest common subsequence start at the bottom-right corner
+
+00:16:34.893 --> 00:16:39.390
+of the full table When the two current characters match record that
+
+00:16:39.404 --> 00:16:43.874
+character and move diagonally to the shorter prefixes When they do
+
+00:16:43.887 --> 00:16:48.072
+not match move toward an above or left neighbor that retains the
+
+00:16:48.167 --> 00:16:53.643
+optimal value Continue until one prefix becomes empty For our example
+
+00:16:54.105 --> 00:17:00.300
+we record E later C and finally A Reversing these characters gives
+
+00:17:00.491 --> 00:17:04.281
+A C E A tie between the above and left values means
+
+00:17:04.295 --> 00:17:09.512
+that more than one optimal route may exist A deterministic implementation
+
+00:17:09.689 --> 00:17:13.629
+can prefer one direction but it should not claim that its resulting
+
+00:17:13.629 --> 00:17:18.914
+string is the only answer The classic textbook example A B C
+
+00:17:18.928 --> 00:17:23.276
+B D A B and B D C A B A has
+
+00:17:23.344 --> 00:17:27.732
+optimal length four and several possible answers If we compress the
+
+00:17:27.746 --> 00:17:32.773
+table to two rows the length is still available but this simple
+
+00:17:32.787 --> 00:17:37.950
+backtracking procedure loses information Reconstruction requires retaining
+
+00:17:37.963 --> 00:17:40.246
+decisions or using a different method
+
+00:17:41.365 --> 00:17:46.827
+This Java fragment directly implements the prefix definition We allocate
+
+00:17:47.221 --> 00:17:53.634
+n plus one rows and m plus one columns Java initializes primitive
+
+00:17:53.647 --> 00:17:58.946
+integer arrays to zero giving the required boundary conditions The
+
+00:17:58.960 --> 00:18:03.824
+loops begin at one because row zero and column zero already represent
+
+00:18:03.946 --> 00:18:09.259
+empty prefixes To access a character subtract one from its prefix length
+
+00:18:09.680 --> 00:18:14.612
+On a match use the diagonal value plus one Otherwise take the
+
+00:18:14.612 --> 00:18:19.558
+maximum from above and left The answer is L at n m
+
+00:18:19.992 --> 00:18:24.517
+Each table cell uses constant work so there are order n times
+
+00:18:24.680 --> 00:18:29.136
+m operations and the full table uses the same order of memory
+
+00:18:29.571 --> 00:18:32.751
+If we only need the length we can keep the previous row
+
+00:18:32.873 --> 00:18:37.506
+and current row giving linear memory in the shorter string length That
+
+00:18:37.520 --> 00:18:42.492
+optimization should follow a correct full-table implementation These
+
+00:18:42.492 --> 00:18:48.403
+examples use Latin characters Java char values are UTF-sixteen code
+
+00:18:48.403 --> 00:18:53.729
+units so a general Unicode application may require code-point processing
+
+00:18:54.829 --> 00:19:00.005
+Related sequence problems include edit distance and longest palindromic
+
+00:19:00.005 --> 00:19:05.712
+subsequence For edit distance with unit costs an empty prefix needs
+
+00:19:05.725 --> 00:19:09.951
+one insertion per character of the other prefix The boundary values
+
+00:19:09.951 --> 00:19:15.793
+are therefore i and j not all zeros Each interior state considers
+
+00:19:15.807 --> 00:19:21.649
+deletion insertion and replacement or matching For longest palindromic
+
+00:19:21.649 --> 00:19:26.812
+subsequence the state refers to an interval within one string A single
+
+00:19:26.812 --> 00:19:32.519
+character has length one and an empty interval has length zero Matching
+
+00:19:32.532 --> 00:19:37.587
+endpoints can contribute two plus the interior answer Different endpoints
+
+00:19:37.600 --> 00:19:42.614
+require skipping one side and taking the maximum This example also
+
+00:19:42.614 --> 00:19:47.247
+shows that pattern categories overlap A problem about a subsequence
+
+00:19:47.451 --> 00:19:51.921
+can use interval states We choose the state according to dependencies
+
+00:19:52.369 --> 00:19:56.541
+not according to one keyword in the problem title In each new
+
+00:19:56.541 --> 00:20:01.323
+problem derive the bases again instead of copying them from LCS
+
+00:20:02.413 --> 00:20:07.616
+Zero-one knapsack gives another example of choosing or skipping Suppose
+
+00:20:07.616 --> 00:20:12.915
+the weights are two three and four the values are three four
+
+00:20:13.146 --> 00:20:18.106
+and five and the capacity is five Selecting the first two items
+
+00:20:18.214 --> 00:20:23.432
+gives weight five and value seven Define K at i c as
+
+00:20:23.445 --> 00:20:27.426
+the maximum total value using the first i items with total weight
+
+00:20:27.630 --> 00:20:30.918
+at most c We can skip the current item and keep the
+
+00:20:30.918 --> 00:20:35.674
+previous row at capacity c If it fits we can take it
+
+00:20:36.108 --> 00:20:40.198
+and add its value to the previous row at the remaining capacity
+
+00:20:40.633 --> 00:20:46.271
+Using the previous row prevents selecting the same item again The zero-item
+
+00:20:46.271 --> 00:20:51.203
+row is zero when selecting nothing is allowed With positive integer
+
+00:20:51.203 --> 00:20:57.059
+weights the time is order n times capacity This is pseudopolynomial
+
+00:20:57.372 --> 00:21:01.394
+because capacity can be much larger than the number of bits used
+
+00:21:01.394 --> 00:21:06.475
+to write it Dynamic programming does not automatically guarantee polynomial
+
+00:21:06.475 --> 00:21:08.445
+time in input length
+
+00:21:09.541 --> 00:21:14.418
+Now consider memory compression for zero-one knapsack If we store only
+
+00:21:14.418 --> 00:21:19.622
+one array we must ensure that the remaining-capacity value still refers
+
+00:21:19.622 --> 00:21:24.731
+to the previous item stage Processing capacities from high to low achieves
+
+00:21:24.731 --> 00:21:28.725
+this A smaller capacity has not yet been updated for the current
+
+00:21:28.725 --> 00:21:33.698
+item so reading it cannot reuse that item If we process capacities
+
+00:21:33.698 --> 00:21:38.372
+upward we may read a value already improved by the same item
+
+00:21:38.889 --> 00:21:43.263
+accidentally implementing repeated selection A tiny counterexample
+
+00:21:43.522 --> 00:21:48.291
+makes the issue visible Take one item of weight two and value
+
+00:21:48.304 --> 00:21:53.522
+three with capacity four The zero-one optimum is three because we have
+
+00:21:53.658 --> 00:21:58.753
+only one item An ascending loop first writes three at capacity two
+
+00:21:59.323 --> 00:22:03.494
+then reads that new value when it reaches capacity four and produces
+
+00:22:03.508 --> 00:22:08.766
+six That is wrong for zero-one knapsack The same issue occurs in
+
+00:22:08.821 --> 00:22:13.168
+other compressed recurrences memory compression changes which time
+
+00:22:13.168 --> 00:22:17.258
+stage a table entry represents so loop direction becomes part of the
+
+00:22:17.272 --> 00:22:18.331
+correctness argument
+
+00:22:19.453 --> 00:22:24.901
+Our next pattern chooses a split inside an interval Matrix multiplication
+
+00:22:25.023 --> 00:22:29.820
+is associative so different parenthesizations give the same mathematical
+
+00:22:29.833 --> 00:22:34.439
+product provided the dimensions are compatible However intermediate
+
+00:22:34.439 --> 00:22:39.602
+matrix sizes can change the number of scalar multiplications dramatically
+
+00:22:40.051 --> 00:22:44.371
+Multiplying a matrix with p rows and q columns by one with
+
+00:22:44.371 --> 00:22:48.882
+q rows and r columns costs p times q times r scalar
+
+00:22:48.896 --> 00:22:53.434
+multiplications using the standard algorithm Matrix-chain optimization
+
+00:22:53.868 --> 00:22:58.461
+chooses parentheses while preserving the original matrix order It does
+
+00:22:58.461 --> 00:23:02.999
+not reorder the matrices and it does not compute the matrix entries
+
+00:23:02.999 --> 00:23:08.148
+themselves Think of it as planning a computation before executing it
+
+00:23:08.583 --> 00:23:12.727
+The output can be a minimum cost and an expression describing the
+
+00:23:12.741 --> 00:23:17.347
+order of operations We will start with three matrices where there are
+
+00:23:17.360 --> 00:23:22.578
+just two parenthesizations then generalize to an interval state The
+
+00:23:22.591 --> 00:23:27.374
+final multiplication always splits the chain into a left contiguous
+
+00:23:27.374 --> 00:23:29.711
+part and a right contiguous part
+
+00:23:30.791 --> 00:23:34.799
+Let us calculate both possibilities rather than accept the answer on
+
+00:23:34.799 --> 00:23:41.375
+faith For open parenthesis A B close parenthesis C the first multiplication
+
+00:23:41.389 --> 00:23:46.620
+costs ten times thirty times five which is fifteen hundred Its result
+
+00:23:46.620 --> 00:23:52.354
+has ten rows and five columns Multiplying that result by C costs
+
+00:23:52.354 --> 00:23:57.476
+ten times five times sixty which is three thousand The total is
+
+00:23:57.489 --> 00:24:02.965
+forty-five hundred For A open parenthesis B C close parenthesis the
+
+00:24:02.965 --> 00:24:07.870
+first multiplication costs thirty times five times sixty which is nine
+
+00:24:07.870 --> 00:24:12.911
+thousand and creates a thirty by sixty matrix Multiplying A by that
+
+00:24:12.924 --> 00:24:18.604
+matrix costs ten times thirty times sixty or eighteen thousand The
+
+00:24:18.604 --> 00:24:23.114
+total is twenty-seven thousand Both expressions have the same final
+
+00:24:23.114 --> 00:24:29.256
+dimensions but one uses six times as many scalar multiplications Before
+
+00:24:29.256 --> 00:24:34.392
+moving on identify the dimensions of each intermediate result yourself
+
+00:24:34.826 --> 00:24:38.522
+That check explains why the transition cost depends on the two interval
+
+00:24:38.522 --> 00:24:40.492
+boundaries and the chosen split
+
+00:24:41.581 --> 00:24:47.070
+Use one-based matrix indices and an array of dimensions p Matrix i
+
+00:24:47.070 --> 00:24:51.744
+has dimensions p at i minus one by p at i. Define M
+
+00:24:51.744 --> 00:24:56.784
+at i j as the minimum cost of multiplying matrices i through
+
+00:24:56.784 --> 00:25:02.844
+j In the final operation some split k separates matrices i through
+
+00:25:02.844 --> 00:25:07.831
+k from matrices k plus one through j The left and right
+
+00:25:07.831 --> 00:25:13.496
+parts must themselves use optimal parenthesizations otherwise replacing
+
+00:25:13.496 --> 00:25:17.804
+a more expensive part would improve the full expression Their result
+
+00:25:17.804 --> 00:25:21.961
+dimensions are p at i minus one by p at k and
+
+00:25:21.961 --> 00:25:25.901
+p at k by p at j Combining them therefore costs the
+
+00:25:25.901 --> 00:25:30.195
+product of these three dimensions We try every k from i through
+
+00:25:30.331 --> 00:25:34.543
+j minus one and choose the minimum total The base case M
+
+00:25:34.543 --> 00:25:40.317
+at i i is zero We compute shorter intervals first With quadratic
+
+00:25:40.317 --> 00:25:44.787
+many intervals and up to linear many splits each the time is
+
+00:25:44.787 --> 00:25:47.083
+cubic and memory is quadratic
+
+00:25:48.167 --> 00:25:53.942
+Consider dimensions forty twenty thirty ten thirty These define four
+
+00:25:53.942 --> 00:25:59.077
+matrices First solve intervals of length two Their costs are twenty-four
+
+00:25:59.077 --> 00:26:05.028
+thousand six thousand and nine thousand For matrices one through three
+
+00:26:05.504 --> 00:26:09.906
+splitting after the first costs fourteen thousand while splitting after
+
+00:26:09.920 --> 00:26:14.716
+the second costs thirty-six thousand We keep fourteen thousand For
+
+00:26:14.716 --> 00:26:20.749
+matrices two through four the best cost is twelve thousand Now consider
+
+00:26:20.749 --> 00:26:25.667
+the complete chain A final split after matrix one costs thirty-six
+
+00:26:25.667 --> 00:26:31.632
+thousand A split after matrix two costs sixty-nine thousand A split
+
+00:26:31.740 --> 00:26:36.740
+after matrix three costs twenty-six thousand so it is the best To
+
+00:26:36.754 --> 00:26:41.673
+reconstruct the expression retain that split and recursively reconstruct
+
+00:26:41.740 --> 00:26:46.618
+both sides The first three matrices use A one multiplied by the
+
+00:26:46.632 --> 00:26:51.333
+product of A two and A three Then multiply by A four
+
+00:26:51.768 --> 00:26:57.012
+The resulting expression has total cost
+twenty-six thousand These intermediate
+
+00:26:57.026 --> 00:27:01.659
+values are useful for detecting dimension-index errors in an implementation
+
+00:27:02.759 --> 00:27:07.623
+The loop structure should express the dependency order visibly The
+
+00:27:07.623 --> 00:27:11.360
+outer loop grows the interval length from two to the number of
+
+00:27:11.360 --> 00:27:17.949
+matrices For each start index i compute the end index j Initialize
+
+00:27:17.949 --> 00:27:22.379
+the interval cost to a large value then try every split k
+
+00:27:22.379 --> 00:27:28.262
+inside it The diagonal entries remain zero representing a single matrix
+
+00:27:28.710 --> 00:27:33.615
+The fragment assumes positive compatible
+dimensions and that all intermediate
+
+00:27:33.615 --> 00:27:38.846
+costs fit a Java long Writing one L before the product promotes
+
+00:27:38.846 --> 00:27:43.737
+the arithmetic before multiplication preventing an accidental integer
+
+00:27:43.860 --> 00:27:48.819
+overflow in that expression It does not protect against values exceeding
+
+00:27:48.819 --> 00:27:53.860
+the long range so constraints still matter A split array can record
+
+00:27:53.860 --> 00:27:58.873
+the k whenever a candidate improves the current minimum A reconstruction
+
+00:27:58.873 --> 00:28:03.411
+procedure then returns a matrix name for a single-element interval
+
+00:28:03.683 --> 00:28:08.099
+and combines recursively reconstructed left and right expressions otherwise
+
+00:28:08.547 --> 00:28:13.887
+Iterating intervals by arbitrary start and end indices without considering
+
+00:28:13.887 --> 00:28:17.501
+length can read values that have not yet been computed
+
+00:28:18.589 --> 00:28:22.407
+Another interval problem asks for the minimum cost to cut a stick
+
+00:28:22.733 --> 00:28:27.352
+at specified positions A cut costs the length of the segment being
+
+00:28:27.352 --> 00:28:32.828
+cut at that moment The order matters because later cuts may operate
+
+00:28:32.841 --> 00:28:38.684
+on shorter segments Add the two endpoints to the sorted required positions
+
+00:28:39.119 --> 00:28:43.222
+Define C at l r as the minimum cost of completing all
+
+00:28:43.235 --> 00:28:48.018
+required cuts strictly inside that interval If the endpoint indices
+
+00:28:48.018 --> 00:28:52.135
+are adjacent there is no internal cut and the cost is zero
+
+00:28:52.556 --> 00:28:58.004
+Otherwise try each internal required position as the first cut It costs
+
+00:28:58.004 --> 00:29:02.461
+the current segment length plus the optimal costs of the left and
+
+00:29:02.461 --> 00:29:06.999
+right intervals For a stick of length ten with required cuts at
+
+00:29:06.999 --> 00:29:12.162
+four and seven cutting at four first costs ten plus six giving
+
+00:29:12.176 --> 00:29:17.964
+sixteen Cutting at seven first costs ten plus seven giving seventeen
+
+00:29:18.385 --> 00:29:23.059
+In this example the interval pattern is familiar but the combine cost
+
+00:29:23.168 --> 00:29:25.165
+differs from matrix multiplication
+
+00:29:26.255 --> 00:29:30.902
+We now move from intervals to a hierarchy Imagine a company party
+
+00:29:31.024 --> 00:29:35.141
+where each employee has a contribution to the event represented by
+
+00:29:35.141 --> 00:29:40.168
+a weight An employee and their immediate supervisor cannot both attend
+
+00:29:40.617 --> 00:29:44.625
+The supervisor relation forms a tree which is the setting of the
+
+00:29:44.638 --> 00:29:49.367
+textbook's company-party problem In graph language we want a maximum
+
+00:29:49.367 --> 00:29:54.149
+weight independent set of a tree Independent means that no edge has
+
+00:29:54.163 --> 00:29:59.543
+both endpoints selected A locally attractive employee is not necessarily
+
+00:29:59.557 --> 00:30:04.638
+part of the optimal global set because choosing that employee can exclude
+
+00:30:04.652 --> 00:30:09.883
+valuable children We root the tree and define subproblems for its subtrees
+
+00:30:10.318 --> 00:30:14.407
+The key boundary information is whether the subtree's root is selected
+
+00:30:14.842 --> 00:30:19.434
+That binary decision tells the parent what combinations are legal Our
+
+00:30:19.448 --> 00:30:24.299
+worked example has root zero with weight five children one and two
+
+00:30:24.326 --> 00:30:28.035
+with weights three and four and nodes three and four below node
+
+00:30:28.035 --> 00:30:31.894
+one with weights six and one We allow selecting no nodes
+
+00:30:33.026 --> 00:30:37.673
+Define take at u as the maximum total weight in u's subtree
+
+00:30:37.890 --> 00:30:41.803
+when u must be selected Define skip at u as the maximum
+
+00:30:41.994 --> 00:30:45.934
+when u must be excluded If we select u every child must
+
+00:30:45.934 --> 00:30:50.485
+be excluded so we add the child's skip value If we exclude
+
+00:30:50.486 --> 00:30:55.146
+u each child may be included or excluded so we add the
+
+00:30:55.146 --> 00:30:59.847
+larger of its two states For a leaf take equals its weight
+
+00:31:00.159 --> 00:31:05.839
+and skip equals zero After processing children before parents the answer
+
+00:31:06.206 --> 00:31:11.178
+is the larger root state The two states are necessary because one
+
+00:31:11.342 --> 00:31:15.649
+unconstrained best value would hide whether the child root was selected
+
+00:31:16.111 --> 00:31:20.431
+The parent needs that information to enforce the edge restriction On
+
+00:31:20.431 --> 00:31:25.227
+a tree separate child subtrees have no edges between them so their
+
+00:31:25.241 --> 00:31:29.371
+legal choices can be combined independently once the decision at u
+
+00:31:29.371 --> 00:31:34.480
+is fixed That independence is the reason the recurrence works It does
+
+00:31:34.480 --> 00:31:39.942
+not automatically extend to a general graph containing cycles or cross
+
+00:31:39.956 --> 00:31:40.499
+edges
+
+00:31:41.591 --> 00:31:45.613
+Start with the leaves Node two has take four and skip zero
+
+00:31:46.048 --> 00:31:50.558
+Node three has take six and skip zero Node four has take
+
+00:31:50.558 --> 00:31:55.029
+one and skip zero At node one taking the node gives its
+
+00:31:55.164 --> 00:32:00.110
+own weight three plus zero from each excluded child Skipping it lets
+
+00:32:00.110 --> 00:32:05.287
+us take both children giving six plus one or seven Now compute
+
+00:32:05.300 --> 00:32:09.838
+root zero Taking the root gives five plus skip one which is
+
+00:32:09.852 --> 00:32:15.694
+seven plus skip two which is zero The result is twelve Skipping
+
+00:32:15.694 --> 00:32:19.961
+the root gives the best state of node one seven plus the
+
+00:32:19.974 --> 00:32:24.648
+best state of node two four The result is eleven Therefore the
+
+00:32:24.662 --> 00:32:31.170
+optimum is twelve One selected set is nodes zero three and four
+
+00:32:31.618 --> 00:32:36.007
+They are pairwise nonadjacent and their weights sum to twelve Notice
+
+00:32:36.020 --> 00:32:41.075
+that a selected grandparent and selected grandchild are permitted The
+
+00:32:41.075 --> 00:32:46.958
+rule prohibits adjacent endpoints not every pair related anywhere in
+
+00:32:46.958 --> 00:32:47.773
+the hierarchy
+
+00:32:48.863 --> 00:32:52.817
+Computing the optimum weight is only part of the tree problem when
+
+00:32:52.830 --> 00:32:57.980
+a guest list is requested Reconstruction starts at the root with no
+
+00:32:57.994 --> 00:33:02.219
+selected parent If the parent of a node is selected the node
+
+00:33:02.341 --> 00:33:07.450
+must be skipped Otherwise compare its take and skip values and choose
+
+00:33:07.464 --> 00:33:11.594
+a better state using a documented tie rule if they are equal
+
+00:33:12.029 --> 00:33:16.662
+Pass the resulting decision to each child In our example the root
+
+00:33:16.662 --> 00:33:21.825
+is selected because twelve exceeds eleven Its children one and two
+
+00:33:21.920 --> 00:33:26.553
+must therefore be skipped Since node one is skipped nodes three and
+
+00:33:26.567 --> 00:33:30.901
+four are free to take their better states and both are selected
+
+00:33:31.350 --> 00:33:36.974
+The result is zero three four Validation should check two independent
+
+00:33:36.975 --> 00:33:42.056
+properties every selected pair is nonadjacent and the sum of their
+
+00:33:42.056 --> 00:33:46.241
+weights equals the reported optimum A correct weight with an illegal
+
+00:33:46.241 --> 00:33:52.518
+guest list is still an incorrect reconstructed solution For tiny trees
+
+00:33:52.926 --> 00:33:58.428
+exhaustive enumeration of all vertex subsets provides a useful independent
+
+00:33:58.428 --> 00:33:59.053
+reference
+
+00:34:00.143 --> 00:34:05.102
+A recursive depth-first traversal naturally computes children before
+
+00:34:05.102 --> 00:34:09.600
+their parent if we combine results after recursive calls On a very
+
+00:34:09.613 --> 00:34:15.646
+deep tree however recursion can exceed Java's call-stack limit An iterative
+
+00:34:15.646 --> 00:34:21.053
+alternative first roots the validated tree and records an order in
+
+00:34:21.053 --> 00:34:25.265
+which every parent appears before its children Reversing that order
+
+00:34:25.279 --> 00:34:30.157
+puts all children before their parent The displayed fragment assumes
+
+00:34:30.157 --> 00:34:36.502
+that this traversal and parent array already exist For each node initialize
+
+00:34:36.502 --> 00:34:41.135
+take to its weight and skip to zero Then combine only neighbors
+
+00:34:41.135 --> 00:34:45.999
+whose parent is the current node Each edge contributes constant work
+
+00:34:46.162 --> 00:34:50.591
+to the appropriate parent-child combination giving linear time for
+
+00:34:50.605 --> 00:34:56.719
+the whole tree The adjacency list parent array order and state arrays
+
+00:34:56.719 --> 00:35:01.189
+use linear memory If the input is an arbitrary graph we must
+
+00:35:01.203 --> 00:35:05.877
+validate connectivity and the tree property rather than silently treating
+
+00:35:05.877 --> 00:35:10.795
+a spanning tree as the original problem Discarding extra edges can
+
+00:35:10.795 --> 00:35:15.021
+produce an invalid independent set for the original graph
+
+00:35:16.141 --> 00:35:20.937
+All our examples share one correctness structure Establish the base
+
+00:35:20.950 --> 00:35:25.760
+cases Assume that the smaller states already have their intended optimal
+
+00:35:25.760 --> 00:35:31.494
+values Show that every transition constructs a legal solution and that
+
+00:35:31.671 --> 00:35:36.304
+every optimal solution has a final choice represented among the candidates
+
+00:35:36.752 --> 00:35:41.086
+Taking the best candidate then gives the desired optimal value The
+
+00:35:41.100 --> 00:35:47.214
+evaluation order supports this induction For complexity LIS has linear
+
+00:35:47.214 --> 00:35:52.350
+many end-index states but examines up to linear many predecessors for
+
+00:35:52.472 --> 00:35:57.431
+each giving quadratic time LCS has a product of the two prefix
+
+00:35:57.445 --> 00:36:02.907
+counts and constant work per state Matrix chains have quadratic many
+
+00:36:02.921 --> 00:36:08.233
+intervals and up to linear many split positions Tree DP has two
+
+00:36:08.247 --> 00:36:12.649
+states per node and total combination work proportional to the tree
+
+00:36:12.649 --> 00:36:17.309
+edges Memory depends on the representation and whether reconstruction
+
+00:36:17.418 --> 00:36:22.431
+is required The length-only LCS optimization does not preserve the
+
+00:36:22.431 --> 00:36:26.888
+full table used in our simple backtracking method Always state what
+
+00:36:26.970 --> 00:36:31.168
+output the memory bound supports rather than presenting a compressed
+
+00:36:31.168 --> 00:36:33.219
+bound without that qualification
+
+00:36:34.333 --> 00:36:38.735
+Testing should challenge the state definition not just repeat the main
+
+00:36:38.748 --> 00:36:45.515
+example For LIS test an empty array one value all equal values
+
+00:36:45.773 --> 00:36:52.349
+and a decreasing array For LCS test either empty string identical strings
+
+00:36:52.634 --> 00:36:56.982
+no common character and repeated characters with several optimal answers
+
+00:36:57.444 --> 00:37:03.273
+For matrix chains a single matrix must cost zero Three matrices let
+
+00:37:03.273 --> 00:37:08.504
+us enumerate both possible parenthesizations by hand and a four-matrix
+
+00:37:08.504 --> 00:37:14.034
+case exposes mistakes in interval order For tree independent set test
+
+00:37:14.115 --> 00:37:19.156
+a single node a chain a star and negative weights when selecting
+
+00:37:19.156 --> 00:37:25.270
+nothing is allowed Compare small random instances with a simple exhaustive
+
+00:37:25.270 --> 00:37:30.936
+solver Reconstructed outputs need separate checks for feasibility and
+
+00:37:30.950 --> 00:37:35.705
+objective value Also distinguish an unknown state from a valid zero
+
+00:37:35.705 --> 00:37:40.746
+answer and avoid adding costs to an infinity sentinel Before attempting
+
+00:37:40.746 --> 00:37:45.216
+memory optimization make the straightforward version correct and inspect
+
+00:37:45.216 --> 00:37:50.134
+its table A printed table for a five-element example often explains
+
+00:37:50.257 --> 00:37:53.803
+a failure more clearly than a large performance test
+
+00:37:54.925 --> 00:37:58.648
+The state definition determines where the final answer is found In
+
+00:37:58.648 --> 00:38:04.585
+longest increasing subsequence the state requires the subsequence to
+
+00:38:04.762 --> 00:38:10.373
+end at a particular index The full optimum can end anywhere so
+
+00:38:10.373 --> 00:38:15.631
+we take the maximum across indices In longest common subsequence the
+
+00:38:15.631 --> 00:38:20.726
+state already allows arbitrary common subsequences of two prefixes
+
+00:38:21.175 --> 00:38:25.156
+The answer for the full strings is therefore the entry for both
+
+00:38:25.156 --> 00:38:30.509
+complete prefixes On a mismatch skipping one final character preserves
+
+00:38:30.577 --> 00:38:34.476
+earlier matches so the recurrence takes the best neighboring prefix
+
+00:38:34.476 --> 00:38:39.707
+value Matrix-chain states depend on shorter intervals which explains
+
+00:38:39.707 --> 00:38:44.694
+the increasing-length order In a tree the parent needs to know whether
+
+00:38:44.694 --> 00:38:49.639
+the child root is selected take and skip preserve this boundary information
+
+00:38:50.074 --> 00:38:54.354
+Reconstruction follows the decisions that attained the optimum Its
+
+00:38:54.368 --> 00:38:59.245
+output must be checked for feasibility as well as objective value These
+
+00:38:59.259 --> 00:39:03.335
+distinctions are useful when adapting a recurrence to a new problem
+
+00:39:03.688 --> 00:39:06.691
+rather than copying a formula unchanged
+
+00:39:07.813 --> 00:39:12.500
+The examples illustrate the same design
+process under different dependencies
+
+00:39:12.949 --> 00:39:18.302
+Sequence states describe an ending position or a pair of prefixes Interval
+
+00:39:18.302 --> 00:39:23.723
+states describe a contiguous range and consider a split Tree states
+
+00:39:23.723 --> 00:39:28.696
+describe a subtree together with a condition at its root The recurrence
+
+00:39:28.696 --> 00:39:33.397
+specifies how the smaller answers combine while the base cases handle
+
+00:39:33.397 --> 00:39:38.614
+the smallest valid inputs A suitable order makes every required answer
+
+00:39:38.628 --> 00:39:42.758
+available Complexity follows from the number of states and the work
+
+00:39:42.758 --> 00:39:47.690
+spent evaluating their choices Memory reductions must preserve the
+
+00:39:47.704 --> 00:39:52.677
+information required by the requested output In particular obtaining
+
+00:39:52.677 --> 00:39:57.351
+an optimal value and reconstructing a solution are separate requirements
+
+00:39:57.799 --> 00:40:01.671
+The references include the dynamic programming chapter of Introduction
+
+00:40:01.739 --> 00:40:06.902
+to Algorithms and additional explanations of subsequences matrix chains
+
+00:40:07.147 --> 00:40:12.473
+and independent sets To review a solution state its subproblem in one
+
+00:40:12.473 --> 00:40:17.174
+sentence derive its choices and check a small example by hand before
+
+00:40:17.188 --> 00:40:18.669
+considering an optimization

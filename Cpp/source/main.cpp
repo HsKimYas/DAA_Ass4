@@ -1,0 +1,2 @@
+#include "algorithms.hpp"
+int main(){string line;while(getline(cin,line)){try{J x=J::parse(line),y;string t=x["task"].text();if(t=="ping")y=J::O{{"status","ready"}};else if(t=="lcs")y=lcs(x);else if(t=="merge")y=merge(x);else if(t=="tree")y=tree(x);else if(t=="naive")y=naive(x);else if(t=="kmp")y=kmp(x);else if(t=="rk")y=rk(x);else if(t=="suffix")y=suffix(x);else if(t=="aho")y=aho(x);else throw runtime_error("Unknown task");cout<<y.dump()<<"\n";}catch(const exception&e){cout<<J(J::O{{"error",e.what()}}).dump()<<"\n";}}}
